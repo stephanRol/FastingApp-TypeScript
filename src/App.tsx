@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import FastPage from './components/FastPage';
+import Navbar from './components/Navbar';
+import Error404 from './components/Error404';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Fasting App</h2>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" />
+          <Route path="/fast" element={<FastPage />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
