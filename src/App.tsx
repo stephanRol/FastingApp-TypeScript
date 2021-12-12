@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import './css/style.css';
 import FastPage from './components/FastPage';
 import Navbar from './components/Navbar';
 import Error404 from './components/Error404';
