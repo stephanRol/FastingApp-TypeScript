@@ -23,7 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass -w src/style.scss:src/css/style.css"
+    "sass": "sass -w src/style.scss:src/css/style.css",
+    "json-server": "json-server --watch db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [

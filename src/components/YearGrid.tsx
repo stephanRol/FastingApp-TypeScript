@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useFetch } from "../hooks/useFetch";
 
-export type dayType = {
+export interface dayType {
     date: Date;
     lipolysis: boolean;
     autophagy: boolean;
 }
+
 interface YearGridProps {
     fastObj: dayType
 }
@@ -13,8 +15,8 @@ const YearGrid = ({ fastObj }: YearGridProps) => {
     const [yearData, setYearData] = useState([])
 
     let allDaysOfYear: dayType[] = [];
-    // let date = new Date(2021, 11, 27)
-    let date = new Date()
+    let date = new Date(2021, 11, 14);
+    // let date = new Date()
     let shifted: dayType;
 
     for (let i = 365; i > -1; i--) {
@@ -38,10 +40,12 @@ const YearGrid = ({ fastObj }: YearGridProps) => {
     }
 
     if (fastObj.date.toLocaleDateString() === new Date().toLocaleDateString()) {
-        if (fastObj.lipolysis) allDaysOfYear[363].lipolysis = true;
-        if (fastObj.autophagy) allDaysOfYear[363].autophagy = true;
+        if (fastObj.lipolysis) allDaysOfYear[allDaysOfYear.length - 1].lipolysis = true;
+        if (fastObj.autophagy) allDaysOfYear[allDaysOfYear.length - 1].autophagy = true;
+        ;
     }
 
+    //Handle the color to be shown in every square 
     const handleClass = (day: dayType) => {
         let classType: string = "daySquare";
         if (day.lipolysis) {
@@ -52,6 +56,11 @@ const YearGrid = ({ fastObj }: YearGridProps) => {
         }
         return classType
     }
+
+    // let { data } = useFetch('http://localhost:3004/posts', "POST");
+    let { data } = useFetch('http://localhost:3004/posts', "GET");
+
+    console.log("SOY LA RESPUESTA DEL FETCH: ", data);
 
 
     return (

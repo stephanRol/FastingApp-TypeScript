@@ -21,10 +21,6 @@ const FastRegister = ({ time }: IRegister) => {
     return (
         <div>
             <h2>Fast Register</h2>
-            <div>
-                {time}
-            </div>
-            {time > 10000 ? "Mas de 10" : "Menos de 10"}
             <YearGrid fastObj={fastObj} />
         </div>
     )
