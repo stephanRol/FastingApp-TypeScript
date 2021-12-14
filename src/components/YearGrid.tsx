@@ -1,22 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext } from "react"
 import { useFetch } from "../hooks/useFetch";
+import { dayType, TimeContext } from "../Context/timeContext"
 
-export interface dayType {
-    date: Date;
-    lipolysis: boolean;
-    autophagy: boolean;
-}
+const YearGrid = () => {
 
-interface YearGridProps {
-    fastObj: dayType
-}
-
-const YearGrid = ({ fastObj }: YearGridProps) => {
-    const [yearData, setYearData] = useState([])
+    const { fastObj, setFastObj } = useContext(TimeContext)
 
     let allDaysOfYear: dayType[] = [];
-    let date = new Date(2021, 11, 14);
-    // let date = new Date()
+    // let date = new Date(2021, 11, 14);
+    let date = new Date()
     let shifted: dayType;
 
     for (let i = 365; i > -1; i--) {
@@ -57,11 +49,17 @@ const YearGrid = ({ fastObj }: YearGridProps) => {
         return classType
     }
 
-    // let { data } = useFetch('http://localhost:3004/posts', "POST");
-    let { data } = useFetch('http://localhost:3004/posts', "GET");
+    // let { data } = useFetch({ url: 'http://localhost:3004/posts', method: "get" });
+
+    let { data } = useFetch({
+        url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+            date: new Date(),
+            lipolysis: false,
+            autophagy: false,
+        }
+    });
 
     console.log("SOY LA RESPUESTA DEL FETCH: ", data);
-
 
     return (
         <div>

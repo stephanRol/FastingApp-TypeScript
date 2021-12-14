@@ -4,9 +4,10 @@ body {
 }
 
 .container-register {
-  border: 1px solid #222020;
+  border: 1px solid #4e4c4c;
   width: 936px;
-  padding: 2px;
+  padding: 5px;
+  border-radius: 5px;
   height: 126px;
   overflow: hidden;
 }

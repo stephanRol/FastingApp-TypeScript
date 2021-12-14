@@ -1,15 +1,12 @@
-import YearGrid from './YearGrid'
+import { useContext, useEffect } from 'react';
+import { TimeContext } from '../Context/timeContext'
 
 interface IRegister {
     time: number;
 }
 
 const FastRegister = ({ time }: IRegister) => {
-    let fastObj = {
-        date: new Date(),
-        lipolysis: false,
-        autophagy: false,
-    }
+    const { fastObj, setFastObj } = useContext(TimeContext)
 
     if (time > 5000) {
         fastObj.lipolysis = true;
@@ -18,12 +15,18 @@ const FastRegister = ({ time }: IRegister) => {
         fastObj.autophagy = true;
     }
 
+    useEffect(() => {
+        setFastObj({ ...fastObj })
+    }, [fastObj.lipolysis, fastObj.autophagy])
+
     return (
         <div>
             <h2>Fast Register</h2>
-            <YearGrid fastObj={fastObj} />
         </div>
     )
 }
 
-export default FastRegister
+export default FastRegister;
+
+
+

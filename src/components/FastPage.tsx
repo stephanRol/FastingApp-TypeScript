@@ -1,11 +1,15 @@
-import React from 'react'
+import TimeProvider from '../Context/timeContext'
 import Stopwatch from './Stopwatch'
+import YearGrid from './YearGrid'
 
 const FastPage = () => {
     return (
         <div>
-            <h2>Fast Page</h2>
-            <Stopwatch />
+            <TimeProvider>
+                <h2>Fast Page</h2>
+                <Stopwatch />
+                <YearGrid />
+            </TimeProvider>
         </div>
     )
 }
