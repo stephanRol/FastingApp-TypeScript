@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import FastRegister from './FastRegister'
+import { TimeContext } from "../Context/timeContext"
 
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
     const [timeOn, setTimeOn] = useState(false);
+    const { setFastObj } = useContext(TimeContext)
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -32,6 +34,11 @@ const Stopwatch = () => {
                 if (response) {
                     setTime(0)
                     localStorage.removeItem('fastStart');
+                    setFastObj({
+                        date: new Date(),
+                        lipolysis: false,
+                        autophagy: false,
+                    })
                 } else {
                     setTimeOn(true);
                 }

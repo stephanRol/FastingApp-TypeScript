@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
 export interface dayType {
+    id?: number
     date: Date;
     lipolysis: boolean;
     autophagy: boolean;
