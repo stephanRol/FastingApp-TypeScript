@@ -10,58 +10,60 @@ const YearGrid = () => {
     const [secondPost, setSecondPost] = useState<dayType[] | undefined>();
     const [all, setAll] = useState<dayType[] | undefined>();
 
+    //Get the data from the first rendering and when there are changes in the fastObj object
     useEffect(() => {
-        let data = FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
-        data.then(
-            res => {
-                if (res !== undefined) setGetData(res)
-                console.log("DATA ACTUAL?", res);
-
-            })
+        FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
+            .then(
+                res => {
+                    if (res !== undefined) setGetData(res)
+                })
     }, [fastObj, firstPost, secondPost])
 
+    //It will create a new Post if the last Post in the database does not match the current day. If it does match, it will delete that last Post and then (next useEffect) create a new Post (update).
     useEffect(() => {
-        if (fastObj.autophagy || fastObj.lipolysis) {
+        if (fastObj.lipolysis === false) return;
 
-            const condition1 = getData[getData.length - 1].lipolysis;
-            const condition2 = getData[getData.length - 1].autophagy;
-            const condition3 = new Date(getData[getData.length - 1].date).toLocaleDateString() === new Date().toLocaleDateString();
+        const condition1 = getData[getData.length - 1].autophagy;
+        const condition2 = new Date(getData[getData.length - 1].date).toLocaleDateString() === new Date().toLocaleDateString();
 
-            if (condition1 && condition2 && condition3) return;
+        if (condition1 && condition2) return;
 
-            if (condition3) {
-                let deleteFinished = FetchFasting({ url: `http://localhost:3004/posts/${getData[getData.length - 1].id}`, method: "DELETE" })
-                deleteFinished.then(res => setAddNewPost(res))
-            } else {
-                let promiseFetch = FetchFasting({
-                    url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                        date: fastObj.date,
-                        lipolysis: fastObj.lipolysis,
-                        autophagy: fastObj.autophagy,
-                    }
-                });
-                promiseFetch.then(res => setFirstPost(res))
-            }
+        if (condition2 && fastObj.autophagy) {
+            FetchFasting({ url: `http://localhost:3004/posts/${getData[getData.length - 1].id}`, method: "DELETE" })
+                .then(res => setAddNewPost(res))
+
+        } else {
+            // if (firstPost && fastObj.lipolysis) return;
+            if (condition2) return;
+            FetchFasting({
+                url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                    date: fastObj.date,
+                    lipolysis: fastObj.lipolysis,
+                    autophagy: fastObj.autophagy,
+                }
+            })
+                .then(res => setFirstPost(res))
         }
     }, [getData])
 
-
+    //Create second Post. This will happen just when fast.autophagy is true
     useEffect(() => {
         if (addNewPost === undefined) return;
-        let promiseFetch = FetchFasting({
-            // FetchFasting({
+        if (fastObj.autophagy === false) return;
+
+        FetchFasting({
             url: 'http://localhost:3004/posts', method: "POST", fastObj: {
                 date: fastObj.date,
                 lipolysis: fastObj.lipolysis,
                 autophagy: fastObj.autophagy,
             }
-        });
-        promiseFetch.then(res => setSecondPost(res))
+        })
+            .then(res => setSecondPost(res))
     }, [addNewPost])
 
-    let allDaysOfYear: dayType[] = [];
-
+    //Creates a grid of the last 365 days and add the data from the database.
     useEffect(() => {
+        let allDaysOfYear: dayType[] = [];
         let shifted: dayType;
 
         if (getData.length === undefined) return;
@@ -92,7 +94,7 @@ const YearGrid = () => {
             shifted = allDaysOfYear.shift()!;
         } while (shifted.date.getDay() !== 0)
 
-        // //When starts week 53, the whole week 1 will be shifted in order to have always just 52 weeks.
+        // //When starts week 53, the whole week 1 will be shifted in order to always have just 52 weeks.
         if (allDaysOfYear.length > 364) {
             for (let i = 0; i < 7; i++) {
                 allDaysOfYear.shift()!;
@@ -101,13 +103,6 @@ const YearGrid = () => {
 
         setAll(allDaysOfYear);
     }, [getData])
-
-    useEffect(() => {
-        if (all !== undefined) {
-            console.log(all[all.length - 1]);
-        }
-
-    }, [all])
 
     //Handle the color to be shown in every square 
     const handleClass = (day: dayType) => {
@@ -125,7 +120,7 @@ const YearGrid = () => {
         <div>
             <div className="container-register">
                 <div className="grid-register">
-                    {all === undefined ? <p>HOLI</p> : all.map((day, index) => {
+                    {all === undefined ? <p>Loading...</p> : all.map((day, index) => {
                         return <div key={index} className={handleClass(day)} title={day.date.toString().split(" ", 4).join(" ")}></div>
                     })}
                 </div>

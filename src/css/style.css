@@ -23,7 +23,7 @@ body {
   height: 12px;
   margin: 2px;
   border-radius: 3px;
-  background-color: #5d5e5d;
+  background-color: #444644;
   border: 1px solid #292727;
 }
 .container-register .grid-register .daySquare-lipolysis {
@@ -31,7 +31,7 @@ body {
   height: 12px;
   margin: 2px;
   border-radius: 3px;
-  background-color: #128812;
+  background-color: #02a847;
   border: 1px solid #292727;
 }
 .container-register .grid-register .daySquare-autophagy {
@@ -39,7 +39,7 @@ body {
   height: 12px;
   margin: 2px;
   border-radius: 3px;
-  background-color: #1d7eb6;
+  background-color: #078ae2;
   border: 1px solid #292727;
 }
 
