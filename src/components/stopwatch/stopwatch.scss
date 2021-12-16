@@ -1,0 +1,84 @@
+%centerDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stopwatchContainer{
+    display: grid;
+    grid-template-columns: 1fr 50% 1fr;
+    width: 100%;
+    height: 40vh;
+    background-color: transparent;
+    .circleContainer{
+        @extend %centerDiv;
+        grid-column: 2;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+            .circleOutside-layer1{
+                @extend %centerDiv;
+                width: 350px;
+                height: 350px;
+                border-radius: 50%;
+                background-color:rgb(68, 70, 68);
+                box-shadow:  16px 16px 40px #181818, -16px -16px 40px #3e4040;
+                .circleOutside-layer2{
+                    @extend %centerDiv;
+                    width: 350px;
+                    height: 350px;
+                    border-radius: 50%;
+                    background-image: linear-gradient(to right, #187c97, #008f9e, #00a192, #00b074, #48bb48);
+                    background-color: transparent;
+                    .circleInside{
+                        @extend %centerDiv;
+                        width: 300px;
+                        height: 300px;
+                        border-radius: 50%;
+                        background-color: rgb(43, 44, 44);
+                        .stopwatch{
+                            font-size: 5rem;
+                            color:whitesmoke;
+                            font-family: "Oswald";
+                            .timeUnits{
+                                margin-top: 1rem;
+                                font-family: "Bebas Neue";
+                            }
+                            .colon{
+                                margin: 0 5px;
+                            }
+                        }
+                    }
+            }
+        }
+    }
+}
+
+.stopwatchButton{
+    display: block;
+    text-align: center;
+    border: none;
+    padding: 0.5rem 2.5rem 0.6rem 2.5rem;
+    border-radius: 1rem;
+    background-color: rgb(10, 115, 156);
+    color:white;
+    font-family: "industrial";
+    font-family: "Oswald";
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover{
+        background-color: rgb(10, 156, 95);
+        transition: 0.2s;
+    }
+
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 3rem;
+}

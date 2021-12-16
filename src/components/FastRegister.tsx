@@ -8,11 +8,6 @@ interface IRegister {
 const FastRegister = ({ time }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-    // console.log("render time");
-    // console.log(fastObj);
-
-
-
     if (time > 5000) {
         fastObj.lipolysis = true;
     }

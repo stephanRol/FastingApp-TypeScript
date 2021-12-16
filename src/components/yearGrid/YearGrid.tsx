@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import { FetchFasting } from "../helper/FetchFasting";
-import { dayType, TimeContext } from "../Context/timeContext"
+import { FetchFasting } from "../../helper/FetchFasting";
+import { dayType, TimeContext } from "../../Context/timeContext"
 
 const YearGrid = () => {
     const { fastObj } = useContext(TimeContext)

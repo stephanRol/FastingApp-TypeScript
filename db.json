@@ -65,6 +65,12 @@
       "lipolysis": true,
       "autophagy": false,
       "id": 11
+    },
+    {
+      "date": "2021-12-16T13:43:26.471Z",
+      "lipolysis": true,
+      "autophagy": true,
+      "id": 12
     }
   ]
 }

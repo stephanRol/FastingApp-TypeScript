@@ -1,6 +1,89 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;700&family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300&family=Roboto:wght@300&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
+@font-face {
+  font-family: "industrial";
+  src: url("../assets/IndustrialSans-Light.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 .circleInside, .stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2, .stopwatchContainer .circleContainer .circleOutside-layer1, .stopwatchContainer .circleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stopwatchContainer {
+  display: grid;
+  grid-template-columns: 1fr 50% 1fr;
+  width: 100%;
+  height: 40vh;
+  background-color: transparent;
+}
+.stopwatchContainer .circleContainer {
+  grid-column: 2;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-color: #444644;
+  box-shadow: 16px 16px 40px #181818, -16px -16px 40px #3e4040;
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-image: linear-gradient(to right, #187c97, #008f9e, #00a192, #00b074, #48bb48);
+  background-color: transparent;
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 .circleInside {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
   background-color: #2b2c2c;
-  color: #dde2e7;
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 .circleInside .stopwatch {
+  font-size: 5rem;
+  color: whitesmoke;
+  font-family: "Oswald";
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 .circleInside .stopwatch .timeUnits {
+  margin-top: 1rem;
+  font-family: "Bebas Neue";
+}
+.stopwatchContainer .circleContainer .circleOutside-layer1 .circleOutside-layer2 .circleInside .stopwatch .colon {
+  margin: 0 5px;
+}
+
+.stopwatchButton {
+  display: block;
+  text-align: center;
+  border: none;
+  padding: 0.5rem 2.5rem 0.6rem 2.5rem;
+  border-radius: 1rem;
+  background-color: #0a739c;
+  color: white;
+  font-family: "industrial";
+  font-family: "Oswald";
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.stopwatchButton:hover {
+  background-color: #0a9c5f;
+  transition: 0.2s;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 3rem;
 }
 
 .container-register {
@@ -31,7 +114,7 @@ body {
   height: 12px;
   margin: 2px;
   border-radius: 3px;
-  background-color: #02a847;
+  background-color: #48bb48;
   border: 1px solid #292727;
 }
 .container-register .grid-register .daySquare-autophagy {
@@ -39,8 +122,32 @@ body {
   height: 12px;
   margin: 2px;
   border-radius: 3px;
-  background-color: #078ae2;
+  background-color: #1f90af;
   border: 1px solid #292727;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  padding: 0;
+}
+
+.navbarLink {
+  color: white;
+  font-family: "industrial";
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+body {
+  background-color: #2b2c2c;
+  color: #dde2e7;
+}
+
+h2 {
+  font-family: "industrial";
 }
 
 /*# sourceMappingURL=style.css.map */

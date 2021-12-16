@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
-import FastRegister from './FastRegister'
-import { TimeContext } from "../Context/timeContext"
+import FastRegister from '../FastRegister'
+import { TimeContext } from "../../Context/timeContext"
 
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
@@ -57,9 +57,20 @@ const Stopwatch = () => {
 
     return (
         <div>
-            <h2>Fast Stopwatch</h2>
-            <div><span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span></div>
-            <button onClick={timeOn ? () => setTimeOn(false) : () => setTimeOn(true)}>{!timeOn ? "Start Fast NOW!" : "Reset"}</button>
+            <div className='stopwatchContainer'>
+                <div className="circleContainer">
+                    <div className="circleOutside-layer1">
+                        <div className="circleOutside-layer2">
+                            <div className="circleInside">
+                                <div className='stopwatch'><span className='timeUnits'>{hours}</span><span className='colon'>:</span><span className='timeUnits'>{minutes}</span><span className='colon'>:</span><span className='timeUnits'>{seconds}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='btnContainer'>
+                <button className="stopwatchButton" onClick={timeOn ? () => setTimeOn(false) : () => setTimeOn(true)}>{!timeOn ? "Start Fast NOW!" : "Reset"}</button>
+            </div>
             <FastRegister time={time} />
         </div>
     )
