@@ -9,6 +9,7 @@ const YearGrid = () => {
     const [firstPost, setFirstPost] = useState<dayType[] | undefined>();
     const [secondPost, setSecondPost] = useState<dayType[] | undefined>();
     const [all, setAll] = useState<dayType[] | undefined>();
+    const [monthsRegister, setMonthsRegister] = useState<string[]>();
 
     //Get the data from the first rendering and when there are changes in the fastObj object
     useEffect(() => {
@@ -101,6 +102,73 @@ const YearGrid = () => {
             }
         }
 
+        //Function that allows to assign the corresponding months to specific grid squares.
+        let months: string[] = [];
+        let month = "";
+        for (let i = 0; i < allDaysOfYear.length; i++) {
+            let monthRepeated = false;
+
+            if (allDaysOfYear[i].date.getDay() === 1) {
+                switch (allDaysOfYear[i].date.getMonth()) {
+                    case 0:
+                        if (month === "Jan") monthRepeated = true;
+                        month = "Jan";
+                        break;
+                    case 1:
+                        if (month === "Feb") monthRepeated = true;
+                        month = "Feb";
+                        break;
+                    case 2:
+                        if (month === "Mar") monthRepeated = true;
+                        month = "Mar";
+                        break;
+                    case 3:
+                        if (month === "Apr") monthRepeated = true;
+                        month = "Apr";
+                        break;
+                    case 4:
+                        if (month === "May") monthRepeated = true;
+                        month = "May";
+                        break;
+                    case 5:
+                        if (month === "Jun") monthRepeated = true;
+                        month = "Jun";
+                        break;
+                    case 6:
+                        if (month === "Jul") monthRepeated = true;
+                        month = "Jul";
+                        break;
+                    case 7:
+                        if (month === "Aug") monthRepeated = true;
+                        month = "Aug";
+                        break;
+                    case 8:
+                        if (month === "Sep") monthRepeated = true;
+                        month = "Sep";
+                        break;
+                    case 9:
+                        if (month === "Oct") monthRepeated = true;
+                        month = "Oct";
+                        break;
+                    case 10:
+                        if (month === "Nov") monthRepeated = true;
+                        month = "Nov";
+                        break;
+                    case 11:
+                        if (month === "Dec") monthRepeated = true;
+                        month = "Dec";
+                        break;
+                    default:
+                        break;
+                }
+                if (monthRepeated) {
+                    months.push("");
+                } else {
+                    months.push(month);
+                }
+            }
+        }
+        setMonthsRegister(months);
         setAll(allDaysOfYear);
     }, [getData])
 
@@ -119,10 +187,27 @@ const YearGrid = () => {
     return (
         <div>
             <div className="container-register">
-                <div className="grid-register">
-                    {all === undefined ? <p>Loading...</p> : all.map((day, index) => {
-                        return <div key={index} className={handleClass(day)} title={day.date.toString().split(" ", 4).join(" ")}></div>
-                    })}
+                <div className="daysAndMonths">
+
+                    <div className="daysWeek">
+                        <span>Mon</span>
+                        <span></span>
+                        <span>Wed</span>
+                        <span></span>
+                        <span>Fri</span>
+                        <span></span>
+                        <span>Sun</span>
+                    </div>
+                    <div className="months">
+                        {monthsRegister?.map((month, index) => {
+                            return <span key={index}>{month}</span>
+                        })}
+                    </div>
+                    <div className="grid-register">
+                        {all === undefined ? <p>Loading...</p> : all.map((day, index) => {
+                            return <div key={index} className={handleClass(day)} title={day.date.toString().split(" ", 4).join(" ")}></div>
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

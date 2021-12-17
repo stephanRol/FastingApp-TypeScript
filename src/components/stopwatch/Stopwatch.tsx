@@ -55,14 +55,21 @@ const Stopwatch = () => {
     }
     let { seconds, minutes, hours } = stopwatchObj
 
+    let totalTime = 20 * 60 * 60 * 1000; //72000000
+    let percentage = (time / totalTime) * 100
+    let grados = percentage * 360 / 100;
+    let styleObj = { backgroundImage: `conic-gradient( transparent 0deg, transparent ${grados}deg, #444644 ${grados}deg, #444644 360deg)` }
+
     return (
         <div>
             <div className='stopwatchContainer'>
                 <div className="circleContainer">
                     <div className="circleOutside-layer1">
                         <div className="circleOutside-layer2">
-                            <div className="circleInside">
-                                <div className='stopwatch'><span className='timeUnits'>{hours}</span><span className='colon'>:</span><span className='timeUnits'>{minutes}</span><span className='colon'>:</span><span className='timeUnits'>{seconds}</span></div>
+                            <div className="circleOutside-layer3" style={styleObj}>
+                                <div className="circleInside">
+                                    <div className='stopwatch'><span className='timeUnits'>{hours}</span><span className='colon'>:</span><span className='timeUnits'>{minutes}</span><span className='colon'>:</span><span className='timeUnits'>{seconds}</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>

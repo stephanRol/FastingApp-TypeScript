@@ -21,7 +21,7 @@ const FastRegister = ({ time }: IRegister) => {
 
     return (
         <div>
-            <h2>Fast Register</h2>
+            <h2>Fasting Registry</h2>
         </div>
     )
 }

@@ -21,15 +21,20 @@
                 width: 350px;
                 height: 350px;
                 border-radius: 50%;
-                background-color:rgb(68, 70, 68);
+                background-color:#444644;
                 box-shadow:  16px 16px 40px #181818, -16px -16px 40px #3e4040;
                 .circleOutside-layer2{
                     @extend %centerDiv;
                     width: 350px;
                     height: 350px;
                     border-radius: 50%;
-                    background-image: linear-gradient(to right, #187c97, #008f9e, #00a192, #00b074, #48bb48);
-                    background-color: transparent;
+                    background-image: conic-gradient( #48bb48 0deg, #187c97 360deg);
+                .circleOutside-layer3{
+                    background-image: conic-gradient( transparent 0deg, transparent 0deg, #444644 0deg, #444644 360deg);
+                    @extend %centerDiv;
+                    width: 350px;
+                    height: 350px;
+                    border-radius: 50%;
                     .circleInside{
                         @extend %centerDiv;
                         width: 300px;
@@ -49,6 +54,7 @@
                             }
                         }
                     }
+                }
             }
         }
     }
