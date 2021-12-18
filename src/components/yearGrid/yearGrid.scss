@@ -48,7 +48,6 @@
             grid-template-rows: repeat(7,1fr);
             gap:0px;
             .daySquare{
-                // @include daySquare(rgb(93, 94, 93));
                 @include daySquare(rgb(68, 70, 68));
             }
             .daySquare-lipolysis{
