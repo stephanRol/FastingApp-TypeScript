@@ -10,7 +10,7 @@ const FastPage = () => {
                 <Stopwatch />
                 <YearGrid />
                 <br /><br />
-                <YearGrid />
+                {/* <YearGrid /> */}
                 <br />
                 <FastingChart />
             </TimeProvider>

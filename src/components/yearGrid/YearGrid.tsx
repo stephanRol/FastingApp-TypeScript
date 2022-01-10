@@ -17,6 +17,8 @@ const YearGrid = () => {
             .then(
                 res => {
                     if (res !== undefined) setGetData(res)
+                    console.log("TESHHHH");
+
                 })
     }, [fastObj, firstPost, secondPost])
 
@@ -26,6 +28,7 @@ const YearGrid = () => {
 
         const condition1 = getData[getData.length - 1].autophagy;
         const condition2 = new Date(getData[getData.length - 1].date).toLocaleDateString() === new Date().toLocaleDateString();
+        // console.log("Consulta 1", condition2);
 
         if (condition1 && condition2) return;
 

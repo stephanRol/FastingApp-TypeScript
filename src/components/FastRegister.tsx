@@ -8,10 +8,13 @@ interface IRegister {
 const FastRegister = ({ time }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-    if (time > 12 * 60 * 60 * 1000) {
+    console.log(fastObj);
+
+    // if (time > 12 * 60 * 60 * 1000) {
+    if (time > 3 * 1000) {
         fastObj.lipolysis = true;
     }
-    if (time > 16 * 60 * 60 * 1000) {
+    if (time > 6 * 1000) {
         fastObj.autophagy = true;
     }
 

@@ -73,7 +73,7 @@ const FastingChart = () => {
         setChartData(chartData);
     }, []);
 
-    console.log(createGradient);
+    // console.log(createGradient);
 
 
     return (
