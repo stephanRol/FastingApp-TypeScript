@@ -1,3 +1,3 @@
 1. El Stopwatch solo debe llegar hasta 20 horas, no mas allá.
-2. Cambio de registro (de verde a azul) nuevamente con problemas.
+2. Cambio de registro (de verde a azul) nuevamente con problemas. // ARREGLADO
 3. Arreglar Local Storage del Stopwatch.

@@ -17,8 +17,6 @@ const YearGrid = () => {
             .then(
                 res => {
                     if (res !== undefined) setGetData(res)
-                    console.log("TESHHHH");
-
                 })
     }, [fastObj, firstPost, secondPost])
 

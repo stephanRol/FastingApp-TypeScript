@@ -3,12 +3,13 @@ import { TimeContext } from '../Context/timeContext'
 
 interface IRegister {
     time: number;
+    setTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const FastRegister = ({ time }: IRegister) => {
+const FastRegister = ({ time, setTime }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-    console.log(fastObj);
+
 
     // if (time > 12 * 60 * 60 * 1000) {
     if (time > 3 * 1000) {
@@ -17,6 +18,29 @@ const FastRegister = ({ time }: IRegister) => {
     if (time > 6 * 1000) {
         fastObj.autophagy = true;
     }
+    if (time > 6 * 1000) {
+        fastObj.autophagy = true;
+    }
+    if (time > 9 * 1000) {
+        console.log("Soy mayor que 9");
+        setTime(0);
+        localStorage.removeItem('fastStart');
+        // setFastObj({
+        //     date: new Date(),
+        //     lipolysis: false,
+        //     autophagy: false,
+        // })
+    }
+
+
+    // useEffect(() => {
+    //     if (time !== 0) return;
+    //     setFastObj({
+    //         date: new Date(),
+    //         lipolysis: false,
+    //         autophagy: false,
+    //     })
+    // }, [time])
 
     useEffect(() => {
         setFastObj({ ...fastObj })

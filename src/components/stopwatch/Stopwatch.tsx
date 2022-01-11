@@ -78,7 +78,7 @@ const Stopwatch = () => {
             <div className='btnContainer'>
                 <button className="stopwatchButton" onClick={timeOn ? () => setTimeOn(false) : () => setTimeOn(true)}>{!timeOn ? "Start Fast NOW!" : "Reset"}</button>
             </div>
-            <FastRegister time={time} />
+            <FastRegister time={time} setTime={setTime} />
         </div>
     )
 }
