@@ -9,7 +9,9 @@ interface IRegister {
 const FastRegister = ({ time, setTime }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-
+    useEffect(() => {
+        setFastObj({ ...fastObj })
+    }, [fastObj.lipolysis, fastObj.autophagy])
 
     // if (time > 12 * 60 * 60 * 1000) {
     if (time > 3 * 1000) {
@@ -21,30 +23,12 @@ const FastRegister = ({ time, setTime }: IRegister) => {
     if (time > 6 * 1000) {
         fastObj.autophagy = true;
     }
-    if (time > 9 * 1000) {
-        console.log("Soy mayor que 9");
-        setTime(0);
-        localStorage.removeItem('fastStart');
-        // setFastObj({
-        //     date: new Date(),
-        //     lipolysis: false,
-        //     autophagy: false,
-        // })
-    }
 
-
+    //ESTA ARRIBA, periodo de test a ver si funciona bien..
     // useEffect(() => {
-    //     if (time !== 0) return;
-    //     setFastObj({
-    //         date: new Date(),
-    //         lipolysis: false,
-    //         autophagy: false,
-    //     })
-    // }, [time])
+    //     setFastObj({ ...fastObj })
+    // }, [fastObj.lipolysis, fastObj.autophagy])
 
-    useEffect(() => {
-        setFastObj({ ...fastObj })
-    }, [fastObj.lipolysis, fastObj.autophagy])
 
     return (
         <div>

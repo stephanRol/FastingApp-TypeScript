@@ -7,6 +7,23 @@ const Stopwatch = () => {
     const [timeOn, setTimeOn] = useState(false);
     const { setFastObj } = useContext(TimeContext)
 
+    //restart the stopwatch after 24 hours
+    useEffect(() => {
+        if (time > 9 * 1000) {
+            console.log("Soy mayor que 9");
+            if (timeOn) {
+                setTimeOn(false);
+                setTime(0)
+                localStorage.removeItem('fastStart');
+                setFastObj({
+                    date: new Date(),
+                    lipolysis: false,
+                    autophagy: false,
+                })
+            }
+        }
+    }, [time])
+
     useEffect(() => {
         let interval: NodeJS.Timeout;
 
