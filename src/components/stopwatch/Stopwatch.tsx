@@ -5,7 +5,7 @@ import { TimeContext } from "../../Context/timeContext"
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
     const [timeOn, setTimeOn] = useState(false);
-    const { setFastObj } = useContext(TimeContext)
+    const { fastObj, setFastObj } = useContext(TimeContext)
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
@@ -19,6 +19,7 @@ const Stopwatch = () => {
                     date: new Date(),
                     lipolysis: false,
                     autophagy: false,
+                    startTime: new Date(0, 0, 0)
                 })
             }
         }
@@ -34,12 +35,20 @@ const Stopwatch = () => {
         if (timeOn) {
             let fastStart: number;
 
-            if (!localStorage.getItem("fastStart")) {
-                localStorage.setItem("fastStart", new Date().getTime().toString())
+            // if (!localStorage.getItem("fastStart")) {
+            //     localStorage.setItem("fastStart", new Date().getTime().toString())
+            // }
+
+            if (fastObj.startTime.getFullYear() === new Date(0, 0, 0).getFullYear()) {
+                setFastObj({ ...fastObj, startTime: new Date() })
+                fastStart = new Date().getTime()
             }
 
-            let timeStart = localStorage.getItem("fastStart");
-            if (timeStart) fastStart = parseInt(timeStart);
+            // let timeStart = localStorage.getItem("fastStart");
+            // if (timeStart) fastStart = parseInt(timeStart);
+
+            // fastStart = fastObj.startTime.getTime()
+            // if (timeStart) fastStart = parseInt(timeStart);
 
             interval = setInterval(() => {
                 setTime(new Date().getTime() - fastStart)
@@ -55,6 +64,7 @@ const Stopwatch = () => {
                         date: new Date(),
                         lipolysis: false,
                         autophagy: false,
+                        startTime: new Date(0, 0, 0)
                     })
                 } else {
                     setTimeOn(true);

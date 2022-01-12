@@ -5,6 +5,7 @@ export interface dayType {
     date: Date;
     lipolysis: boolean;
     autophagy: boolean;
+    startTime: Date;
 }
 
 interface dataProviderType {
@@ -23,6 +24,7 @@ const TimeProvider = ({ children }: TimeContextProviderProps) => {
         date: new Date(),
         lipolysis: false,
         autophagy: false,
+        startTime: new Date(0, 0, 0)
     })
     let data: dataProviderType = { fastObj, setFastObj }
 

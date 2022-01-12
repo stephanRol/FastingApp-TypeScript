@@ -42,6 +42,7 @@ const YearGrid = () => {
                     date: fastObj.date,
                     lipolysis: fastObj.lipolysis,
                     autophagy: fastObj.autophagy,
+                    startTime: fastObj.startTime
                 }
             })
                 .then(res => setFirstPost(res))
@@ -58,6 +59,7 @@ const YearGrid = () => {
                 date: fastObj.date,
                 lipolysis: fastObj.lipolysis,
                 autophagy: fastObj.autophagy,
+                startTime: fastObj.startTime
             }
         })
             .then(res => setSecondPost(res))
@@ -80,6 +82,7 @@ const YearGrid = () => {
                     date: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * i),
                     lipolysis: getData[counter].lipolysis,
                     autophagy: getData[counter].autophagy,
+                    startTime: getData[counter].startTime
                 })
                 if (counter < getData.length - 1) counter++;
             } else {
@@ -87,6 +90,7 @@ const YearGrid = () => {
                     date: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * i),
                     lipolysis: false,
                     autophagy: false,
+                    startTime: getData[counter].startTime
                 })
             }
         }

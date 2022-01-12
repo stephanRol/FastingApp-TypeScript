@@ -9,6 +9,11 @@ interface IRegister {
 const FastRegister = ({ time, setTime }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
+    console.log(fastObj.startTime);
+    console.log(new Date(0, 0, 0).getFullYear());
+    console.log(fastObj.startTime.getFullYear() == new Date(0, 0, 0).getFullYear());
+
+
     useEffect(() => {
         setFastObj({ ...fastObj })
     }, [fastObj.lipolysis, fastObj.autophagy])
