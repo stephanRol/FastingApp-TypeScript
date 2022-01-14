@@ -1,11 +1,13 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import FastRegister from '../FastRegister'
 import { TimeContext } from "../../Context/timeContext"
+import { FetchFasting } from '../../helper/FetchFasting';
 
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
     const [timeOn, setTimeOn] = useState(false);
     const { fastObj, setFastObj } = useContext(TimeContext)
+    const refFastStart = useRef(0)
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
@@ -14,44 +16,72 @@ const Stopwatch = () => {
             if (timeOn) {
                 setTimeOn(false);
                 setTime(0)
-                localStorage.removeItem('fastStart');
-                setFastObj({
-                    date: new Date(),
-                    lipolysis: false,
-                    autophagy: false,
-                    startTime: new Date(0, 0, 0)
-                })
             }
         }
     }, [time])
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
-
-        if (localStorage.getItem("fastStart") && time === 0) {
-            setTimeOn(true);
-        }
+        let fastStart: number;
 
         if (timeOn) {
-            let fastStart: number;
+            if (time === 0) {
+                if (new Date(fastObj.date).toLocaleDateString() === new Date().toLocaleDateString()) {
+                    //DELETE y luego POST
+                    console.log("DELETE y luego POST", fastObj);
+                    //DELETE
+                    FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
+                        .then(res => console.log(res))
 
-            // if (!localStorage.getItem("fastStart")) {
-            //     localStorage.setItem("fastStart", new Date().getTime().toString())
-            // }
+                    //POST
+                    FetchFasting({
+                        url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                            date: fastObj.date,
+                            lipolysis: fastObj.lipolysis,
+                            autophagy: fastObj.autophagy,
+                            startTime: fastObj.startTime
+                        }
+                    }).then(res => {
+                        console.log(res);
+                        // setFastObj({
+                        //     date: new Date(),
+                        //     lipolysis: false,
+                        //     autophagy: false,
+                        //     startTime: new Date()
+                        // })
+                    })
 
-            if (fastObj.startTime.getFullYear() === new Date(0, 0, 0).getFullYear()) {
-                setFastObj({ ...fastObj, startTime: new Date() })
-                fastStart = new Date().getTime()
+                    fastStart = new Date().getTime();
+
+                } else {
+                    console.log("NUEVO POST!", fastObj);
+                    FetchFasting({
+                        url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                            date: new Date(),
+                            lipolysis: false,
+                            autophagy: false,
+                            startTime: new Date()
+                        }
+                    }).then(res => {
+                        console.log(res);
+                        setFastObj({
+                            id: fastObj.id! + 1, // OJO AQUI
+                            date: new Date(),
+                            lipolysis: false,
+                            autophagy: false,
+                            startTime: new Date()
+                        })
+                    })
+                    // fastStart = new Date().getTime(); // usar un useRef?
+                    refFastStart.current = new Date().getTime(); // usar un useRef?
+
+                }
+            } else {
+                refFastStart.current = fastObj.startTime.getTime();
             }
 
-            // let timeStart = localStorage.getItem("fastStart");
-            // if (timeStart) fastStart = parseInt(timeStart);
-
-            // fastStart = fastObj.startTime.getTime()
-            // if (timeStart) fastStart = parseInt(timeStart);
-
             interval = setInterval(() => {
-                setTime(new Date().getTime() - fastStart)
+                setTime(new Date().getTime() - refFastStart.current)
             }, 1000)
 
         } else {
@@ -59,18 +89,12 @@ const Stopwatch = () => {
                 let response: boolean = window.confirm("Are you sure you want to reset the stopwatch?");
                 if (response) {
                     setTime(0)
-                    localStorage.removeItem('fastStart');
-                    setFastObj({
-                        date: new Date(),
-                        lipolysis: false,
-                        autophagy: false,
-                        startTime: new Date(0, 0, 0)
-                    })
                 } else {
                     setTimeOn(true);
                 }
             }
         }
+
         return () => clearInterval(interval)
 
     }, [timeOn])

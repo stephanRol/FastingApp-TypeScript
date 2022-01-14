@@ -8,11 +8,11 @@ const FastPage = () => {
         <div>
             <TimeProvider>
                 <Stopwatch />
-                <YearGrid />
+                {/* <YearGrid /> */}
                 <br /><br />
                 {/* <YearGrid /> */}
                 <br />
-                <FastingChart />
+                {/* <FastingChart /> */}
             </TimeProvider>
         </div>
     )

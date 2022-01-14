@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { FetchFasting } from "../helper/FetchFasting";
 
 export interface dayType {
     id?: number
@@ -20,12 +21,25 @@ type TimeContextProviderProps = {
 export const TimeContext = createContext({} as dataProviderType);
 
 const TimeProvider = ({ children }: TimeContextProviderProps) => {
-    const [fastObj, setFastObj] = useState({
-        date: new Date(),
-        lipolysis: false,
-        autophagy: false,
-        startTime: new Date(0, 0, 0)
-    })
+    const [fastObj, setFastObj] = useState({} as dayType);
+
+    useEffect(() => {
+        FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
+            .then(
+                res => {
+                    if (res !== undefined) {
+                        setFastObj({
+                            id: res[res.length - 1].id,
+                            date: res[res.length - 1].date,
+                            lipolysis: res[res.length - 1].lipolysis,
+                            autophagy: res[res.length - 1].autophagy,
+                            startTime: res[res.length - 1].startTime
+                        })
+                    }
+                }
+            )
+    }, [])
+
     let data: dataProviderType = { fastObj, setFastObj }
 
     return (

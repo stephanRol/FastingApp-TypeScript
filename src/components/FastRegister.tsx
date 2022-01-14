@@ -9,9 +9,10 @@ interface IRegister {
 const FastRegister = ({ time, setTime }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-    console.log(fastObj.startTime);
-    console.log(new Date(0, 0, 0).getFullYear());
-    console.log(fastObj.startTime.getFullYear() == new Date(0, 0, 0).getFullYear());
+    //BORRAR
+    // console.log(fastObj.startTime);
+    // console.log(new Date(0, 0, 0).getFullYear());
+    // console.log(fastObj.startTime.getFullYear() == new Date(0, 0, 0).getFullYear());
 
 
     useEffect(() => {
@@ -43,6 +44,5 @@ const FastRegister = ({ time, setTime }: IRegister) => {
 }
 
 export default FastRegister;
-
 
 
