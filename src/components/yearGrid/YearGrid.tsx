@@ -42,7 +42,8 @@ const YearGrid = () => {
                     date: fastObj.date,
                     lipolysis: fastObj.lipolysis,
                     autophagy: fastObj.autophagy,
-                    startTime: fastObj.startTime
+                    startTime: fastObj.startTime,
+                    timeOn: true //BORRAR QUIZAS
                 }
             })
                 .then(res => setFirstPost(res))
@@ -59,7 +60,8 @@ const YearGrid = () => {
                 date: fastObj.date,
                 lipolysis: fastObj.lipolysis,
                 autophagy: fastObj.autophagy,
-                startTime: fastObj.startTime
+                startTime: fastObj.startTime,
+                timeOn: true //BORRAR QUIZAS
             }
         })
             .then(res => setSecondPost(res))
@@ -82,7 +84,8 @@ const YearGrid = () => {
                     date: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * i),
                     lipolysis: getData[counter].lipolysis,
                     autophagy: getData[counter].autophagy,
-                    startTime: getData[counter].startTime
+                    startTime: getData[counter].startTime,
+                    timeOn: true //BORRAR QUIZAS
                 })
                 if (counter < getData.length - 1) counter++;
             } else {
@@ -90,7 +93,8 @@ const YearGrid = () => {
                     date: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * i),
                     lipolysis: false,
                     autophagy: false,
-                    startTime: getData[counter].startTime
+                    startTime: getData[counter].startTime,
+                    timeOn: true //BORRAR QUIZAS
                 })
             }
         }
@@ -177,7 +181,7 @@ const YearGrid = () => {
         setAll(allDaysOfYear);
     }, [getData])
 
-    //Handle the color to be shown in every square 
+    //Handle the color to be shown in every square
     const handleClass = (day: dayType) => {
         let classType: string = "daySquare";
         if (day.lipolysis) {

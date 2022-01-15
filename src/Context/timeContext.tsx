@@ -7,6 +7,7 @@ export interface dayType {
     lipolysis: boolean;
     autophagy: boolean;
     startTime: Date;
+    timeOn: boolean;
 }
 
 interface dataProviderType {
@@ -33,7 +34,8 @@ const TimeProvider = ({ children }: TimeContextProviderProps) => {
                             date: res[res.length - 1].date,
                             lipolysis: res[res.length - 1].lipolysis,
                             autophagy: res[res.length - 1].autophagy,
-                            startTime: res[res.length - 1].startTime
+                            startTime: res[res.length - 1].startTime,
+                            timeOn: res[res.length - 1].timeOn
                         })
                     }
                 }

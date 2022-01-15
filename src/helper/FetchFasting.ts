@@ -31,6 +31,7 @@ export const FetchFasting = async ({ url, method, fastObj }: FetchProps) => {
     let lipolysis = false;
     let autophagy = false;
     let startTime = new Date();
+    let timeOn = true;
     let options: IOptions | IOptionsExt = {
         method: method,
         headers: { 'Content-Type': 'application/json' },
@@ -41,9 +42,10 @@ export const FetchFasting = async ({ url, method, fastObj }: FetchProps) => {
         lipolysis = fastObj.lipolysis;
         autophagy = fastObj.autophagy;
         startTime = fastObj.startTime;
+        timeOn = fastObj.timeOn;
     }
     if (method === "post" || method === "POST") {
-        options = { ...options, body: JSON.stringify({ date: date, lipolysis: lipolysis, autophagy: autophagy, startTime: startTime }) }
+        options = { ...options, body: JSON.stringify({ date, lipolysis, autophagy, startTime, timeOn }) }
     }
     try {
         let res = await fetch(url, options)

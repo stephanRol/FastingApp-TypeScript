@@ -9,75 +9,93 @@ const Stopwatch = () => {
     const { fastObj, setFastObj } = useContext(TimeContext)
     const refFastStart = useRef(0)
 
+    useEffect(() => {
+        if (!fastObj.timeOn) return;
+        setTimeOn(true);
+    }, [fastObj])
+
     //restart the stopwatch after 24 hours
     useEffect(() => {
-        if (time > 9 * 1000) {
+        if (time > 9 * 60 * 60 * 1000) {
             console.log("Soy mayor que 9");
             if (timeOn) {
                 setTimeOn(false);
                 setTime(0)
+                FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
+                    .then(res => {
+                        //POST
+                        FetchFasting({
+                            url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                                date: fastObj.date,
+                                lipolysis: fastObj.lipolysis,
+                                autophagy: fastObj.autophagy,
+                                startTime: new Date(),
+                                timeOn: false,
+                            }
+                        })
+                    })
             }
         }
     }, [time])
 
     useEffect(() => {
-        let interval: NodeJS.Timeout;
         let fastStart: number;
-
+        let interval: NodeJS.Timeout;
         if (timeOn) {
-            if (time === 0) {
+            if (time === 0 && !fastObj.timeOn) {
                 if (new Date(fastObj.date).toLocaleDateString() === new Date().toLocaleDateString()) {
-                    //DELETE y luego POST
-                    console.log("DELETE y luego POST", fastObj);
-                    //DELETE
+                    console.log("SEGUNDA VEZ!");
+                    //DELETE & POST
                     FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
-                        .then(res => console.log(res))
+                        .then(res => {
+                            //POST
+                            FetchFasting({
+                                url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                                    date: fastObj.date,
+                                    lipolysis: fastObj.lipolysis,
+                                    autophagy: fastObj.autophagy,
+                                    startTime: new Date(),
+                                    timeOn: true,
+                                }
+                            }).then(res => {
+                                refFastStart.current = new Date().getTime();
+                                setFastObj({
+                                    id: fastObj.id, // OJO AQUI
+                                    date: new Date(),
+                                    lipolysis: fastObj.lipolysis,
+                                    autophagy: fastObj.autophagy,
+                                    startTime: new Date(),
+                                    timeOn: true,
+                                })
+                            })
+                            //agregar un .then ?
 
-                    //POST
-                    FetchFasting({
-                        url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                            date: fastObj.date,
-                            lipolysis: fastObj.lipolysis,
-                            autophagy: fastObj.autophagy,
-                            startTime: fastObj.startTime
-                        }
-                    }).then(res => {
-                        console.log(res);
-                        // setFastObj({
-                        //     date: new Date(),
-                        //     lipolysis: false,
-                        //     autophagy: false,
-                        //     startTime: new Date()
-                        // })
-                    })
-
-                    fastStart = new Date().getTime();
-
+                        })
                 } else {
-                    console.log("NUEVO POST!", fastObj);
+                    console.log("NUEVO POST!");
                     FetchFasting({
                         url: 'http://localhost:3004/posts', method: "POST", fastObj: {
                             date: new Date(),
                             lipolysis: false,
                             autophagy: false,
-                            startTime: new Date()
+                            startTime: new Date(),
+                            timeOn: true,
                         }
                     }).then(res => {
-                        console.log(res);
                         setFastObj({
                             id: fastObj.id! + 1, // OJO AQUI
                             date: new Date(),
                             lipolysis: false,
                             autophagy: false,
-                            startTime: new Date()
+                            startTime: new Date(),
+                            timeOn: true,
                         })
                     })
-                    // fastStart = new Date().getTime(); // usar un useRef?
-                    refFastStart.current = new Date().getTime(); // usar un useRef?
-
+                    refFastStart.current = new Date().getTime();
                 }
             } else {
-                refFastStart.current = fastObj.startTime.getTime();
+                console.log("ME RECARGE");
+                refFastStart.current = new Date(fastObj.startTime).getTime();
             }
 
             interval = setInterval(() => {
@@ -89,12 +107,34 @@ const Stopwatch = () => {
                 let response: boolean = window.confirm("Are you sure you want to reset the stopwatch?");
                 if (response) {
                     setTime(0)
+                    //Delete & post
+                    FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
+                        .then(res => {
+                            //POST
+                            FetchFasting({
+                                url: 'http://localhost:3004/posts', method: "POST", fastObj: {
+                                    date: fastObj.date,
+                                    lipolysis: fastObj.lipolysis,
+                                    autophagy: fastObj.autophagy,
+                                    startTime: new Date(),
+                                    timeOn: false,
+                                }
+                            }).then(res => {
+                                setFastObj({
+                                    id: fastObj.id, // OJO AQUI
+                                    date: fastObj.date,
+                                    lipolysis: fastObj.lipolysis,
+                                    autophagy: fastObj.autophagy,
+                                    startTime: new Date(),
+                                    timeOn: false,
+                                })
+                            })
+                        })
                 } else {
                     setTimeOn(true);
                 }
             }
         }
-
         return () => clearInterval(interval)
 
     }, [timeOn])

@@ -9,12 +9,6 @@ interface IRegister {
 const FastRegister = ({ time, setTime }: IRegister) => {
     const { fastObj, setFastObj } = useContext(TimeContext)
 
-    //BORRAR
-    // console.log(fastObj.startTime);
-    // console.log(new Date(0, 0, 0).getFullYear());
-    // console.log(fastObj.startTime.getFullYear() == new Date(0, 0, 0).getFullYear());
-
-
     useEffect(() => {
         setFastObj({ ...fastObj })
     }, [fastObj.lipolysis, fastObj.autophagy])
@@ -29,12 +23,6 @@ const FastRegister = ({ time, setTime }: IRegister) => {
     if (time > 6 * 1000) {
         fastObj.autophagy = true;
     }
-
-    //ESTA ARRIBA, periodo de test a ver si funciona bien..
-    // useEffect(() => {
-    //     setFastObj({ ...fastObj })
-    // }, [fastObj.lipolysis, fastObj.autophagy])
-
 
     return (
         <div>

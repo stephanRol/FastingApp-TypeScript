@@ -91,17 +91,28 @@
       "id": 15
     },
     {
-      "date": "2022-01-11T06:32:04.604Z",
+      "date": "2022-01-13T20:52:06.918Z",
       "lipolysis": true,
       "autophagy": true,
+      "startTime": "2022-01-15T21:10:25.786Z",
+      "timeOn": false,
       "id": 16
     },
     {
-      "date": "2022-01-14T22:46:17.295Z",
+      "date": "2022-01-14T20:52:06.918Z",
       "lipolysis": true,
       "autophagy": true,
-      "startTime": "2022-01-14T22:46:17.295Z",
+      "startTime": "2022-01-15T21:10:25.786Z",
+      "timeOn": false,
       "id": 17
+    },
+    {
+      "date": "2022-01-15T22:00:36.969Z",
+      "lipolysis": true,
+      "autophagy": true,
+      "startTime": "2022-01-15T22:00:53.420Z",
+      "timeOn": true,
+      "id": 18
     }
   ]
 }
