@@ -110,9 +110,17 @@
       "date": "2022-01-15T22:00:36.969Z",
       "lipolysis": true,
       "autophagy": true,
-      "startTime": "2022-01-15T22:00:53.420Z",
-      "timeOn": true,
+      "startTime": "2022-01-16T07:04:43.389Z",
+      "timeOn": false,
       "id": 18
+    },
+    {
+      "date": "2022-01-16T20:53:45.140Z",
+      "lipolysis": false,
+      "autophagy": false,
+      "startTime": "2022-01-16T20:54:34.739Z",
+      "timeOn": true,
+      "id": 19
     }
   ]
 }

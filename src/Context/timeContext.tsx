@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
-import { FetchFasting } from "../helper/FetchFasting";
+import { createContext, useEffect, useReducer } from "react";
+import { fastingAppReducer, actionType } from "../Reducer/reducers/fastingAppReducer";
+import { firstFetch } from "../Reducer/actions/fastingAppActions";
 
 export interface dayType {
     id?: number
@@ -11,8 +12,8 @@ export interface dayType {
 }
 
 interface dataProviderType {
-    fastObj: dayType
-    setFastObj: React.Dispatch<React.SetStateAction<dayType>>
+    state: dayType
+    dispatch: React.Dispatch<actionType>
 }
 
 type TimeContextProviderProps = {
@@ -20,29 +21,16 @@ type TimeContextProviderProps = {
 }
 
 export const TimeContext = createContext({} as dataProviderType);
+export const initialStateReducer = {} as dayType;
 
 const TimeProvider = ({ children }: TimeContextProviderProps) => {
-    const [fastObj, setFastObj] = useState({} as dayType);
+    const [state, dispatch] = useReducer(fastingAppReducer, initialStateReducer)
 
     useEffect(() => {
-        FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
-            .then(
-                res => {
-                    if (res !== undefined) {
-                        setFastObj({
-                            id: res[res.length - 1].id,
-                            date: res[res.length - 1].date,
-                            lipolysis: res[res.length - 1].lipolysis,
-                            autophagy: res[res.length - 1].autophagy,
-                            startTime: res[res.length - 1].startTime,
-                            timeOn: res[res.length - 1].timeOn
-                        })
-                    }
-                }
-            )
+        firstFetch(dispatch);
     }, [])
 
-    let data: dataProviderType = { fastObj, setFastObj }
+    let data = { state, dispatch }
 
     return (
         <TimeContext.Provider value={data}>

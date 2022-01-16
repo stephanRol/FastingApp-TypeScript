@@ -1,36 +1,35 @@
-import { useContext, useEffect } from 'react';
-import { TimeContext } from '../Context/timeContext'
+// import { useContext, useEffect } from 'react';
+// import { TimeContext } from '../Context/timeContext'
 
-interface IRegister {
-    time: number;
-    setTime: React.Dispatch<React.SetStateAction<number>>;
-}
+// interface IRegister {
+//     time: number;
+//     setTime: React.Dispatch<React.SetStateAction<number>>;
+// }
 
-const FastRegister = ({ time, setTime }: IRegister) => {
-    const { fastObj, setFastObj } = useContext(TimeContext)
+// const FastRegister = ({ time, setTime }: IRegister) => {
+//     const { state, dispatch } = useContext(TimeContext)
 
-    useEffect(() => {
-        setFastObj({ ...fastObj })
-    }, [fastObj.lipolysis, fastObj.autophagy])
+//     useEffect(() => {
+//         setFastObj({ ...fastObj })
+//     }, [fastObj.lipolysis, fastObj.autophagy])
 
-    // if (time > 12 * 60 * 60 * 1000) {
-    if (time > 3 * 1000) {
-        fastObj.lipolysis = true;
-    }
-    if (time > 6 * 1000) {
-        fastObj.autophagy = true;
-    }
-    if (time > 6 * 1000) {
-        fastObj.autophagy = true;
-    }
+//     // if (time > 12 * 60 * 60 * 1000) {
+//     if (time > 3 * 1000) {
+//         fastObj.lipolysis = true;
+//     }
+//     if (time > 6 * 1000) {
+//         fastObj.autophagy = true;
+//     }
 
-    return (
-        <div>
-            <h2>Fasting Register</h2>
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             <h2>Fasting Register</h2>
+//         </div>
+//     )
+// }
 
-export default FastRegister;
+// export default FastRegister;
+
+export { }
 
 

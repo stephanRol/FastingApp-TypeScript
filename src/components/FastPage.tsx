@@ -1,7 +1,7 @@
 import TimeProvider from '../Context/timeContext'
 import FastingChart from './fastingChart/FastingChart'
 import Stopwatch from './stopwatch/Stopwatch'
-import YearGrid from './yearGrid/YearGrid'
+// import YearGrid from './yearGrid/YearGrid'
 
 const FastPage = () => {
     return (

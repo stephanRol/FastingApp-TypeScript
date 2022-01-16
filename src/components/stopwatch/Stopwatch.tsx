@@ -1,142 +1,64 @@
 import { useEffect, useState, useContext, useRef } from 'react'
-import FastRegister from '../FastRegister'
+// import FastRegister from '../FastRegister'
 import { TimeContext } from "../../Context/timeContext"
-import { FetchFasting } from '../../helper/FetchFasting';
+import { deleteAndPost, firstPost, limitReached } from '../../Reducer/actions/fastingAppActions';
 
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
     const [timeOn, setTimeOn] = useState(false);
-    const { fastObj, setFastObj } = useContext(TimeContext)
-    const refFastStart = useRef(0)
+    const { state, dispatch } = useContext(TimeContext)
+    const refFastStart = useRef(0);
 
     useEffect(() => {
-        if (!fastObj.timeOn) return;
+        if (!state.timeOn) return;
         setTimeOn(true);
-    }, [fastObj])
+    }, [state])
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
-        if (time > 9 * 60 * 60 * 1000) {
+        if (time > 24 * 60 * 60 * 1000) {
             console.log("Soy mayor que 9");
             if (timeOn) {
                 setTimeOn(false);
                 setTime(0)
-                FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
-                    .then(res => {
-                        //POST
-                        FetchFasting({
-                            url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                                date: fastObj.date,
-                                lipolysis: fastObj.lipolysis,
-                                autophagy: fastObj.autophagy,
-                                startTime: new Date(),
-                                timeOn: false,
-                            }
-                        })
-                    })
+                limitReached(state, dispatch)
             }
         }
     }, [time])
 
     useEffect(() => {
-        let fastStart: number;
         let interval: NodeJS.Timeout;
         if (timeOn) {
-            if (time === 0 && !fastObj.timeOn) {
-                if (new Date(fastObj.date).toLocaleDateString() === new Date().toLocaleDateString()) {
+            if (time === 0 && !state.timeOn) {
+                if (new Date(state.date).toLocaleDateString() === new Date().toLocaleDateString()) {
                     console.log("SEGUNDA VEZ!");
-                    //DELETE & POST
-                    FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
-                        .then(res => {
-                            //POST
-                            FetchFasting({
-                                url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                                    date: fastObj.date,
-                                    lipolysis: fastObj.lipolysis,
-                                    autophagy: fastObj.autophagy,
-                                    startTime: new Date(),
-                                    timeOn: true,
-                                }
-                            }).then(res => {
-                                refFastStart.current = new Date().getTime();
-                                setFastObj({
-                                    id: fastObj.id, // OJO AQUI
-                                    date: new Date(),
-                                    lipolysis: fastObj.lipolysis,
-                                    autophagy: fastObj.autophagy,
-                                    startTime: new Date(),
-                                    timeOn: true,
-                                })
-                            })
-                            //agregar un .then ?
-
-                        })
+                    deleteAndPost(state, dispatch, true)
+                    refFastStart.current = new Date().getTime();
                 } else {
                     console.log("NUEVO POST!");
-                    FetchFasting({
-                        url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                            date: new Date(),
-                            lipolysis: false,
-                            autophagy: false,
-                            startTime: new Date(),
-                            timeOn: true,
-                        }
-                    }).then(res => {
-                        setFastObj({
-                            id: fastObj.id! + 1, // OJO AQUI
-                            date: new Date(),
-                            lipolysis: false,
-                            autophagy: false,
-                            startTime: new Date(),
-                            timeOn: true,
-                        })
-                    })
+                    firstPost(state, dispatch);
                     refFastStart.current = new Date().getTime();
                 }
             } else {
                 console.log("ME RECARGE");
-                refFastStart.current = new Date(fastObj.startTime).getTime();
+                refFastStart.current = new Date(state.startTime).getTime();
             }
-
             interval = setInterval(() => {
                 setTime(new Date().getTime() - refFastStart.current)
             }, 1000)
 
         } else {
             if (time !== 0) {
-                let response: boolean = window.confirm("Are you sure you want to reset the stopwatch?");
+                let response = window.confirm("Are you sure you want to reset the stopwatch?");
                 if (response) {
                     setTime(0)
-                    //Delete & post
-                    FetchFasting({ url: `http://localhost:3004/posts/${fastObj.id}`, method: "DELETE" })
-                        .then(res => {
-                            //POST
-                            FetchFasting({
-                                url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-                                    date: fastObj.date,
-                                    lipolysis: fastObj.lipolysis,
-                                    autophagy: fastObj.autophagy,
-                                    startTime: new Date(),
-                                    timeOn: false,
-                                }
-                            }).then(res => {
-                                setFastObj({
-                                    id: fastObj.id, // OJO AQUI
-                                    date: fastObj.date,
-                                    lipolysis: fastObj.lipolysis,
-                                    autophagy: fastObj.autophagy,
-                                    startTime: new Date(),
-                                    timeOn: false,
-                                })
-                            })
-                        })
+                    deleteAndPost(state, dispatch, false)
                 } else {
                     setTimeOn(true);
                 }
             }
         }
         return () => clearInterval(interval)
-
     }, [timeOn])
 
     let stopwatchObj = {
@@ -169,7 +91,7 @@ const Stopwatch = () => {
             <div className='btnContainer'>
                 <button className="stopwatchButton" onClick={timeOn ? () => setTimeOn(false) : () => setTimeOn(true)}>{!timeOn ? "Start Fast NOW!" : "Reset"}</button>
             </div>
-            <FastRegister time={time} setTime={setTime} />
+            {/* <FastRegister time={time} setTime={setTime} /> */}
         </div>
     )
 }
