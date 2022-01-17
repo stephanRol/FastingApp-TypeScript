@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext, useRef } from 'react'
 // import FastRegister from '../FastRegister'
 import { TimeContext } from "../../Context/timeContext"
-import { deleteAndPost, firstPost, limitReached } from '../../Reducer/actions/fastingAppActions';
+import { deleteAndPost, firstPost, limitReached, setLipolysisAutophagy } from '../../Reducer/actions/fastingAppActions';
 
 const Stopwatch = () => {
     const [time, setTime] = useState(0);
@@ -9,6 +9,7 @@ const Stopwatch = () => {
     const { state, dispatch } = useContext(TimeContext)
     const refFastStart = useRef(0);
 
+    //shows time running after first render
     useEffect(() => {
         if (!state.timeOn) return;
         setTimeOn(true);
@@ -16,8 +17,16 @@ const Stopwatch = () => {
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
+        // if (time > 12 * 60 * 60 * 1000) {
+        if (time > 10 * 1000) {
+            if (state.autophagy) return
+            setLipolysisAutophagy(state, dispatch, true, true);
+        }
+        if (time > 5 * 1000) {
+            if (state.lipolysis) return
+            setLipolysisAutophagy(state, dispatch, true, false);
+        }
         if (time > 24 * 60 * 60 * 1000) {
-            console.log("Soy mayor que 9");
             if (timeOn) {
                 setTimeOn(false);
                 setTime(0)
@@ -91,7 +100,6 @@ const Stopwatch = () => {
             <div className='btnContainer'>
                 <button className="stopwatchButton" onClick={timeOn ? () => setTimeOn(false) : () => setTimeOn(true)}>{!timeOn ? "Start Fast NOW!" : "Reset"}</button>
             </div>
-            {/* <FastRegister time={time} setTime={setTime} /> */}
         </div>
     )
 }
