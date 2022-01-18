@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext, useRef } from 'react'
-// import FastRegister from '../FastRegister'
 import { TimeContext } from "../../Context/timeContext"
 import { deleteAndPost, firstPost, limitReached, setLipolysisAutophagy } from '../../Reducer/actions/fastingAppActions';
 
@@ -17,6 +16,13 @@ const Stopwatch = () => {
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
+        if (time > 24 * 60 * 60 * 1000) { // TESTEAR ESTA FUNCION NO FUNCIONA CORRECTAMENTE
+            if (timeOn) {
+                setTimeOn(false);
+                setTime(0)
+                limitReached(state, dispatch)
+            }
+        }
         // if (time > 12 * 60 * 60 * 1000) {
         if (time > 10 * 1000) {
             if (state.autophagy) return
@@ -25,13 +31,6 @@ const Stopwatch = () => {
         if (time > 5 * 1000) {
             if (state.lipolysis) return
             setLipolysisAutophagy(state, dispatch, true, false);
-        }
-        if (time > 24 * 60 * 60 * 1000) {
-            if (timeOn) {
-                setTimeOn(false);
-                setTime(0)
-                limitReached(state, dispatch)
-            }
         }
     }, [time])
 

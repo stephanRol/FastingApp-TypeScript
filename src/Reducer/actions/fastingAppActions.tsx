@@ -17,7 +17,7 @@ export const firstFetch = (dispatch: React.Dispatch<actionType>) => {
                             lipolysis: res[res.length - 1].lipolysis,
                             autophagy: res[res.length - 1].autophagy,
                             startTime: res[res.length - 1].startTime,
-                            timeOn: res[res.length - 1].timeOn
+                            timeOn: res[res.length - 1].timeOn,
                         }
                     })
                 }
