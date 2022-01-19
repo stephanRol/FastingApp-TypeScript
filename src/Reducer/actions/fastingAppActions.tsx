@@ -32,11 +32,22 @@ export const limitReached = (state: dayType, dispatch: React.Dispatch<actionType
             FetchFasting({
                 url: URL, method: "POST", fastObj: {
                     date: state.date,
-                    lipolysis: state.lipolysis,
-                    autophagy: state.autophagy,
+                    lipolysis: true,
+                    autophagy: true,
                     startTime: new Date(),
                     timeOn: false,
                 }
+            }).then(res => {
+                dispatch({
+                    type: TYPES.deletePost, payload: {
+                        id: state.id,
+                        date: state.date,
+                        lipolysis: true,
+                        autophagy: true,
+                        startTime: new Date(),
+                        timeOn: false,
+                    }
+                })
             })
         })
 }
@@ -57,7 +68,7 @@ export const deleteAndPost = (state: dayType, dispatch: React.Dispatch<actionTyp
             }).then(res => {
                 dispatch({
                     type: TYPES.deletePost, payload: {
-                        id: state.id, // OJO AQUI
+                        id: state.id,
                         date: booleano ? new Date() : state.date,
                         lipolysis: state.lipolysis,
                         autophagy: state.autophagy,
@@ -106,7 +117,7 @@ export const setLipolysisAutophagy = (state: dayType, dispatch: React.Dispatch<a
             }).then(res => {
                 dispatch({
                     type: TYPES.deletePost, payload: {
-                        id: state.id, // OJO AQUI
+                        id: state.id,
                         date: state.date,
                         lipolysis: lipolysisValue,
                         autophagy: autophagyValue,

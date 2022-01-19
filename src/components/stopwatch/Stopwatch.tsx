@@ -16,19 +16,18 @@ const Stopwatch = () => {
 
     //restart the stopwatch after 24 hours
     useEffect(() => {
-        if (time > 24 * 60 * 60 * 1000) { // TESTEAR ESTA FUNCION NO FUNCIONA CORRECTAMENTE
+        if (time > 24 * 60 * 60 * 1000) {
             if (timeOn) {
                 setTimeOn(false);
                 setTime(0)
                 limitReached(state, dispatch)
             }
         }
-        // if (time > 12 * 60 * 60 * 1000) {
-        if (time > 10 * 1000) {
+        if (time > 16 * 60 * 60 * 1000) {
             if (state.autophagy) return
             setLipolysisAutophagy(state, dispatch, true, true);
         }
-        if (time > 5 * 1000) {
+        if (time > 12 * 60 * 60 * 1000) {
             if (state.lipolysis) return
             setLipolysisAutophagy(state, dispatch, true, false);
         }

@@ -1,91 +1,15 @@
-import { useContext, useEffect, useState } from "react"
-// import { FetchFasting } from "../../helper/FetchFasting";
-import { dayType, TimeContext } from "../../Context/timeContext"
+import { useEffect, useState } from "react"
+import { dayType } from "../../Context/timeContext"
 
 type yearGridProps = {
     data: dayType[];
 }
 
 const YearGrid = (props: yearGridProps) => {
-    // const { state, dispatch } = useContext(TimeContext)
-    // const [getData, setGetData] = useState<dayType[]>({} as dayType[])
-    // const [addNewPost, setAddNewPost] = useState<dayType[] | undefined>();
-    // const [firstPost, setFirstPost] = useState<dayType[] | undefined>();
-    // const [secondPost, setSecondPost] = useState<dayType[] | undefined>();
     const [all, setAll] = useState<dayType[] | undefined>();
     const [monthsRegister, setMonthsRegister] = useState<string[]>();
 
     const { data } = props;
-    console.log("Me renderizo desde Year Grid", data[data.length - 1]);
-
-
-
-    //Get the data from the first rendering and when there are changes in the fastObj object
-    // useEffect(() => {
-    //     console.log("LOG DESDE YEAR GRID", state);
-    //     FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
-    //         .then(
-    //             res => {
-    //                 if (res !== undefined) setGetData(res)
-    //             })
-
-    // }, [state])
-
-    //Get the data from the first rendering and when there are changes in the fastObj object
-    // useEffect(() => {
-    //     FetchFasting({ url: 'http://localhost:3004/posts', method: "GET" })
-    //         .then(
-    //             res => {
-    //                 if (res !== undefined) setGetData(res)
-    //             })
-    // }, [fastObj, firstPost, secondPost])
-
-    //It will create a new Post if the last Post in the database does not match the current day. If it does match, it will delete that last Post and then (next useEffect) create a new Post (update).
-    // useEffect(() => {
-    //     if (fastObj.lipolysis === false) return;
-
-    //     const condition1 = getData[getData.length - 1].autophagy;
-    //     const condition2 = new Date(getData[getData.length - 1].date).toLocaleDateString() === new Date().toLocaleDateString();
-    //     // console.log("Consulta 1", condition2);
-
-    //     if (condition1 && condition2) return;
-
-    //     if (condition2 && fastObj.autophagy) {
-    //         FetchFasting({ url: `http://localhost:3004/posts/${getData[getData.length - 1].id}`, method: "DELETE" })
-    //             .then(res => setAddNewPost(res))
-
-    //     } else {
-    //         // if (firstPost && fastObj.lipolysis) return;
-    //         if (condition2) return;
-    //         FetchFasting({
-    //             url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-    //                 date: fastObj.date,
-    //                 lipolysis: fastObj.lipolysis,
-    //                 autophagy: fastObj.autophagy,
-    //                 startTime: fastObj.startTime,
-    //                 timeOn: true //BORRAR QUIZAS
-    //             }
-    //         })
-    //             .then(res => setFirstPost(res))
-    //     }
-    // }, [getData])
-
-    //Create second Post. This will happen just when fast.autophagy is true
-    // useEffect(() => {
-    //     if (addNewPost === undefined) return;
-    //     if (fastObj.autophagy === false) return;
-
-    //     FetchFasting({
-    //         url: 'http://localhost:3004/posts', method: "POST", fastObj: {
-    //             date: fastObj.date,
-    //             lipolysis: fastObj.lipolysis,
-    //             autophagy: fastObj.autophagy,
-    //             startTime: fastObj.startTime,
-    //             timeOn: true //BORRAR QUIZAS
-    //         }
-    //     })
-    //         .then(res => setSecondPost(res))
-    // }, [addNewPost])
 
     //Creates a grid of the last 365 days and add the data from the database.
     useEffect(() => {
