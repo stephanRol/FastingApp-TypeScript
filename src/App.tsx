@@ -4,6 +4,7 @@ import FastPage from './components/FastPage';
 import Navbar from './components/Navbar/Navbar';
 import Error404 from './components/Error404';
 import TimeProvider from './Context/timeContext';
+import Borrar from './Borrar';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="*" element={<Error404 />} />
           </Routes>
         </Router>
+        <Borrar />
       </TimeProvider>
     </div>
   );

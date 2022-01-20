@@ -108,7 +108,7 @@ export const setLipolysisAutophagy = (state: dayType, dispatch: React.Dispatch<a
         .then(res => {
             FetchFasting({
                 url: URL, method: "POST", fastObj: {
-                    date: state.date,
+                    date: new Date(),
                     lipolysis: lipolysisValue,
                     autophagy: autophagyValue,
                     startTime: state.startTime,

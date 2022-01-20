@@ -28,7 +28,7 @@ const Stopwatch = () => {
             setLipolysisAutophagy(state, dispatch, true, true);
         }
         if (time > 12 * 60 * 60 * 1000) {
-            if (state.lipolysis) return
+            if (state.lipolysis && (new Date(state.date).toLocaleDateString() === new Date().toLocaleDateString())) return
             setLipolysisAutophagy(state, dispatch, true, false);
         }
     }, [time])
